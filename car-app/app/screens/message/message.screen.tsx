@@ -9,6 +9,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { colors } from '../../theme/colors';
 import SingleItem from './component/singleItem';
 import { renderBoderBottom } from '../../utils/ui-utils';
+import { navigate } from '../../navigators/navigation-utilities';
 
 const MessageScreen = () => {
     const styles = createStyles();
@@ -26,14 +27,19 @@ const MessageScreen = () => {
         
         
         />
-        <FlatList 
-        
-        data={[1,2,3,4,5,6,7,8,9,10]}
-        renderItem={({item}) => <SingleItem 
-        isHighlighted={[1,2,3,4,5].includes(item)}
-        />}
-
+    <FlatList 
+    data={[1,2,3,4,5,6,7,8,9,10]}
+    renderItem={({item}) => (
+        <SingleItem 
+            isHighlighted={[1,2,3,4,5].includes(item)} 
+            name={''}
+            message={''}
+            time={''}
+            badge={0}
+            onPress={() => navigate('rootStack', { screen: 'ChatScreen' })}
         />
+    )}
+    />
         {renderBoderBottom(90)}
     </View>
     </View>
