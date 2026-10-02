@@ -1,0 +1,10 @@
+# Development environment
+
+- This checkout is a React Native mobile UI prototype, not the fullstack product described in the README. Screens use hardcoded demo data; authentication is selected by a hardcoded `isAuthenticated = true`. There is no backend, database, or external credential requirement in the current code. Do not claim bookings, payments, messaging, or Google authentication are connected to real services.
+- Base44 runs the native screens through React Native Web: `docker compose -f docker-compose.base44.yml up -d`. Source is bind-mounted; Webpack polls for changes. Dependencies live in a Docker volume and are synchronized with `yarn install --immutable` on every startup.
+- Use the pinned Yarn 3.6.4 via Corepack. The imported Yarn 1 lockfile was migrated to Yarn 3 during preview setup. The old npm lockfile is not the authoritative lockfile for this environment.
+- `/` frames `/app.html` in a responsive 430-wide mobile viewport because native scaling uses window dimensions. Tests that inspect app content from `/` must target that inner iframe, or open `/app.html` with a mobile viewport.
+- Browser-only entry/config are in `car-app/web/`; native entry and Babel configuration remain unchanged. Web aliases React Native and linear gradients, includes native icon fonts, and ignores Gesture Handler's optional Reanimated integration. Webpack must resolve `.web.*` before native extensions and allow extensionless ESM imports.
+- A read-only Compose healthcheck checks the live `/app.js` bundle for the registered `QentWeb` entry. Verify `docker compose -f docker-compose.base44.yml ps` reports healthy, and curl `/` and `/app.html`. Build logs should show live Webpack compilation, not a production bundle.
+- Restart `web` after changing Webpack configuration or dependencies; screen edits reload automatically. Native-only functionality still requires an Android/iOS runtime.
+- Existing test command: `docker compose -f docker-compose.base44.yml exec -T web yarn test --runInBand`. The imported Jest smoke test is not a substitute for browser checks and may need native/navigation mocks.
