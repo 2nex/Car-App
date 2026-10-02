@@ -4,7 +4,7 @@
 import React from 'react';
 import {Animated, Platform, Text, View} from 'react-native';
 
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, ParamListBase} from '@react-navigation/native';
 import {
   CardStyleInterpolators,
   createStackNavigator,
@@ -44,7 +44,7 @@ import EditScreen from '../screens/account/edit/edit.screen';
 import ChatScreen from '../screens/message/chat/chat.screen';
 
 type NavigationProps = Partial<
-  React.ComponentProps<typeof NavigationContainer>
+  React.ComponentProps<typeof NavigationContainer<ParamListBase>>
 >;
 
 const av = new Animated.Value(0);
@@ -267,7 +267,7 @@ const CombinedStack = () => {
   const isAuthenticated = true;
   return (
     <Stack.Navigator
-      screenOptions={{headerShown: false, animationEnabled: true}}>
+      screenOptions={{headerShown: false, animation: 'default'}}>
       <Stack.Screen
         name="auth"
         options={{

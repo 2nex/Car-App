@@ -39,7 +39,7 @@ const TabSwitcher = ({
                 tabStyle,
                 item.id === active.id && styles.activeTab,
               ]}>
-              {item?.component  && React.isValidElement(item?.component)
+              {item?.component  && React.isValidElement<{color?: string}>(item?.component)
               ? React.cloneElement (item?.component,  {
                 color: item?.id === active.id ? colors.white : colors.gray,
               })

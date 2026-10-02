@@ -3,6 +3,7 @@ import {
   NavigationAction,
   NavigationState,
   PartialState,
+  ParamListBase,
   StackActions,
 } from '@react-navigation/native';
 import {useEffect, useRef} from 'react';
@@ -20,7 +21,7 @@ export const RootNavigation = {
   dispatch(_action: NavigationAction) {},
 };
 
-export const navigationRef = createNavigationContainerRef();
+export const navigationRef = createNavigationContainerRef<ParamListBase>();
 
 /**
  * Gets the current screen from any navigation state.
@@ -61,7 +62,8 @@ export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
       }
 
       // grab the current route
-      const routeName = getActiveRouteName(navigationRef.getRootState());
+      const state = navigationRef.getRootState();
+      const routeName = state ? getActiveRouteName(state) : null;
 
       // are we allowed to exit?
       if (canExitRef.current(routeName)) {
@@ -79,11 +81,10 @@ export function useBackButtonHandler(canExit: (routeName: string) => boolean) {
     };
 
     // Subscribe when we come to life
-    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+    const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
     // Unsubscribe when we're done
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    return () => subscription.remove();
   }, []);
 }
 

@@ -12,6 +12,9 @@ export type NavigatorParamList = {
   ['ProfileScreen']: undefined;
   ['SearchScreen']: undefined;
   ['CarScreen']: undefined;
+  ['auth']: undefined;
+  ['tabStack']: undefined;
+  ['authStack']: undefined;
   ['rootStack']: undefined;
   ['ReviewScreen']: undefined;
   ['BookingDetailsScreen']: undefined;

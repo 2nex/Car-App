@@ -43,7 +43,7 @@ const OtpComponent = ({onOTPChange}: IOtpComponentProps) => {
       {otp.map((_, index) => (
         <TextInput
           key={index}
-          ref={ref => (inputRef.current[index] = ref)}
+          ref={ref => { inputRef.current[index] = ref; }}
           style={styles.input}
           keyboardType="numeric"
           maxLength={1}
